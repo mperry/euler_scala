@@ -1,51 +1,44 @@
 package mperry
 
+/*
+ * By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
+ * the 6th prime is 13.
+ *
+ * What is the 10 001st prime number?
+ * 
+ */
 object P7 {
-
-  /*
-   * By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
-   * the 6th prime is 13.
-   *
-   * What is the 10 001st prime number?
-   * 
-   */
   
   def p = {
-  
-	 
-    val v = sieveWithSize(2::Nil, 2, 10001)
+    val primes = sieveWithSize(10001, stopOnListSize, debug).reverse
+    val p = primes.last
+    assert(p == 104743)
+    println("p = " + p + " size = " + primes.size + " list = " + primes)
+  }
 
-    println(v.head)
-	
-      
+  def stopOnListSize(a: List[Int], current: Int, max: Int): Boolean = {
+    a.size >= max
+  }
+  
+  def stopWithLmit(a: List[Int], current: Int, max: Int): Boolean = {
+    current >= max
+  }
+  
+  def debug(current: Int, max: Int) {
     
   }
   
+  def sieveWithSize(max: Int, f: (List[Int], Int, Int) => Boolean, debug: (Int, Int) => Unit): List[Int] = {
+	  sieveWithSize(2::Nil, 3, max, f, debug)
+  }
   
-   
-  def sieveWithMax(a: List[Int], current: Int, max: Int): List[Int] = {
-    if (current % 100 == 0) {
-    	println(current, max)  
-    }
-    
-    if (current > max) a
-    else if (a.forall(x => current % x != 0)) sieveWithMax(current::a, current + 1, max)
-    else sieveWithMax(a, current + 1, max)
+  def sieveWithSize(a: List[Int], current: Int, max: Int, 
+      f: (List[Int], Int, Int) => Boolean, debug: (Int, Int) => Unit): List[Int] = {
+    debug(current, max)
+    val step = 2
+    if (f(a, current, max)) a
+    else if (a.forall(x => current % x != 0)) sieveWithSize(current::a, current + step, max, f, debug)
+    else sieveWithSize(a, current + step, max, f, debug)
   }
-
-    def sieveWithSize(a: List[Int], current: Int, max: Int): List[Int] = {
-    if (a.size >= max) a
-    else if (a.forall(x => current % x != 0)) sieveWithSize(current::a, current + 1, max)
-    else sieveWithSize(a, current + 1, max)
-  }
-
-    // incomplete
-  def sieveWithStop(a: List[Int], current: Int, max: Int, f: Int => Int): List[Int] = {
-    if (a.size >= max) a
-    else if (a.forall(x => current % x != 0)) sieveWithStop(current::a, current + 1, max, f)
-    else sieveWithStop(a, current + 1, max, f)
-  }
-
-  
   
 }

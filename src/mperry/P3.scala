@@ -1,21 +1,28 @@
 package mperry
 
+/*
+ * The prime factors of 13195 are 5, 7, 13 and 29.
+ * 
+ * What is the largest prime factor of the number 600851475143 ?
+ * 
+ */
 object P3 {
 
   def p = {
-	  val r = factor(BigInt("600851475143"))
-	  val r2 = r.head
-	  println ("r = " + r + " r2 = " + r2)
+	  val f = factors(BigInt("600851475143"))
+	  val high = f.last
+	  assert(high == 6857)
+	  println ("highest_factor = " + high + " factors = " + f)
   }
   
-  def factor(n: BigInt): List[BigInt] = {
-    factor(n, 2, List())
+  def factors(n: BigInt): List[BigInt] = {
+    factors(n, 2, List()).reverse
   }
   
-  def factor(n: BigInt, d: BigInt, a: List[BigInt]): List[BigInt] = {
-    if (d == n) d:: a 
-    else if (n % d == 0) factor(n / d, d, d :: a) 
-    else factor(n, d + 1, a)
+  def factors(numerator: BigInt, denominator: BigInt, results: List[BigInt]): List[BigInt] = {
+    if (denominator == numerator) denominator::results 
+    else if (numerator % denominator == 0) factors(numerator / denominator, denominator, denominator :: results) 
+    else factors(numerator, denominator + 1, results)
   }
   
 }
