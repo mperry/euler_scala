@@ -11,7 +11,7 @@ object P10 {
   def p = {
     val max = 2000000
     // executes in around 30 mins?
-    val r = P7.sieveWithSize(max, P7.stopWithLmit, debug).reverse
+    val r = P07.sieveWithSize(max, P07.stopWithLmit, debug).reverse
     val x = r.foldLeft (0) (_ + _)
     assert(x == 1179908154)
     println ("sum = " + x + " list = " + r)
