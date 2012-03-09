@@ -7,7 +7,7 @@ package mperry
  * What is the 10 001st prime number?
  * 
  */
-object P7 {
+object P07 {
   
   def p = {
     val size = 10001

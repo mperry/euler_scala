@@ -6,7 +6,7 @@ package mperry
  * What is the largest prime factor of the number 600851475143 ?
  * 
  */
-object P3 {
+object P03 {
 
   def p = {
 	  val f = factors(BigInt("600851475143"))

@@ -7,7 +7,7 @@ package mperry
  * Find the largest palindrome made from the product of two 3-digit numbers.
  * 
  */
-object P4 {
+object P04 {
 
   def p() = {
     val range = 100 to 999

@@ -10,7 +10,7 @@ package mperry
  * four million, find the sum of the even-valued terms.
  * 
  */
-object P2 {
+object P02 {
 
   def p = {
     val r = fib.takeWhile(_ <= 4000000).filter(n => n % 2 == 0).foldLeft (0) (_+_)

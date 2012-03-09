@@ -9,7 +9,7 @@ package mperry
  * There exists exactly one Pythagorean triplet for which a + b + c = 1000.
  * Find the product abc.
  */
-object P9 {
+object P09 {
 
   def p = {
     val n = 1000
