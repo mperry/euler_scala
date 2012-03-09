@@ -10,9 +10,14 @@ package mperry
 object P7 {
   
   def p = {
-    val primes = sieveWithSize(10001, stopOnListSize, debug).reverse
+    val size = 10001
+//    val primes = sieveWithSize(size, stopOnListSize, debug).reverse
+//    val p = primes.last
+//    val primes = lazySieve(Stream from 2).take(size)
+    val primes = lazyValSieve.take(size)
     val p = primes.last
-    assert(p == 104743)
+    
+//    assert(p == 104743)
     println("p = " + p + " size = " + primes.size + " list = " + primes)
   }
 
@@ -40,5 +45,23 @@ object P7 {
     else if (a.forall(x => current % x != 0)) sieveWithSize(current::a, current + step, max, f, debug)
     else sieveWithSize(a, current + step, max, f, debug)
   }
+ 
+  /**
+   * This sieve is simple and is called recursively, filtering each element
+   * On my box with JVM parameter for max heap size of 1024 (-Xmx1024m) I 
+   * get OutOfMemory errors because it constructs a stream in memory for each prime 
+   * number 
+   */
+  def lazySieve(s: Stream[Int]): Stream[Int] = {
+    val prime = s.head
+    println(prime + " ")
+    Stream.cons(prime, lazySieve(s.filter(x => x % prime != 0)))
+  }
+  
+  /**
+   * This is fast, it reuses the one stream, only checking up to root(n)
+   */
+  val lazyValSieve: Stream[Int] = 2 #:: Stream.from(3).filter(i => lazyValSieve.takeWhile(j => j * j <= i).forall(i % _ > 0))
+  
   
 }

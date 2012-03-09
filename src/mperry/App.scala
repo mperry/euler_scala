@@ -3,7 +3,7 @@ package mperry
 object App {
 
 	def main(args: Array[String]) {
-	  P10.p;
+	  P7.p;
 	}
 	
 	
