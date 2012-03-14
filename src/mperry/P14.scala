@@ -24,7 +24,7 @@ object P14 {
   def p = {
     
     val exp = 6
-    val high = math.pow(10, exp).toInt
+    val high = Math.pow(10, exp).toInt
 //    val high = 5
     val chains = (1 until high).map(collatz(_))
     val sizes = chains.map(_.size)
