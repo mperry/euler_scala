@@ -1,4 +1,5 @@
 package mperry
+import mperry.math.PrimeSieve
 
 /*
  * By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that 
@@ -14,7 +15,7 @@ object P07 {
 //    val primes = sieveWithSize(size, stopOnListSize, debug).reverse
 //    val p = primes.last
 //    val primes = lazySieve(Stream from 2).take(size)
-    val primes = lazyValSieve.take(size)
+    val primes = PrimeSieve.lazyValSieve.take(size)
     val p = primes.last
     
 //    assert(p == 104743)
@@ -57,11 +58,6 @@ object P07 {
     println(prime + " ")
     Stream.cons(prime, lazySieve(s.filter(x => x % prime != 0)))
   }
-  
-  /**
-   * This is fast, it reuses the one stream, only checking up to root(n)
-   */
-  val lazyValSieve: Stream[Int] = 2 #:: Stream.from(3).filter(i => lazyValSieve.takeWhile(j => j * j <= i).forall(i % _ > 0))
   
   
 }
