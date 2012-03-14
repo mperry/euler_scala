@@ -1,4 +1,7 @@
 package mperry
+import scala.Option.option2Iterable
+
+import mperry.math.PrimeSieve
 
 /**
  * The prime 41, can be written as the sum of six consecutive primes:
@@ -19,9 +22,11 @@ package mperry
 object P50 {
 
   def p = {
-    val s = P07.lazyValSieve
+    val s = PrimeSieve.lazyValSieve
 //    val p = primesBelow(s, 1000, 0, Nil).reverse
-    val p = primeSumBelow(s, 1000000)
+    val high = 1000
+    val high2 = Math.pow(10, 6).toInt
+    val p = primeSumBelow(s, high2)
     val sizes = p.map(_._2.size)
     val max = sizes.max
     val index = sizes.indexWhere(_ == max)
