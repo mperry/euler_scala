@@ -44,7 +44,7 @@ object P12 {
   }
 
   def factors(n: Int): List[Int] = {
-    val r = math.sqrt(n).toInt
+    val r = Math.sqrt(n).toInt
     val s = for (i <- 1 to r; if (n % i == 0)) yield List(i, n / i)
     List.flatten(s.toList).toSet.toList.sort(_ < _)
   }
