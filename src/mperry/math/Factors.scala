@@ -2,7 +2,9 @@ package mperry.math
 
 object Factors {
 
-  
+  def factorSum(n: BigInt): BigInt = {
+    factors(n).sum
+  }
   
   def factors(n: BigInt): List[BigInt] = {
     factors(n, 1, Math.sqrt(n.toDouble).toInt, List()).sort(_ > _).tail.reverse
