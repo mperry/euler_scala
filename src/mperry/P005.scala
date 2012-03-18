@@ -8,7 +8,7 @@ package mperry
  * numbers from 1 to 20?
  * 
  */
-object P05 {
+object P005 {
   
   def p() = {
     val v = smallestDivisible(20)

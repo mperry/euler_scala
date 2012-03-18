@@ -9,7 +9,7 @@ package mperry
  * There exists exactly one Pythagorean triplet for which a + b + c = 1000.
  * Find the product abc.
  */
-object P09 {
+object P009 {
 
   def p = {
     val n = 1000
@@ -19,8 +19,9 @@ object P09 {
 
     assert(v.size == 1) 
     val list = v(0)
-    assert(list(0) == 200 && list(1) == 375 && list(2) == 425)
-    println(list)
+    def product = list.fold(1) (_ * _)
+    println("list = " + list + " product = " + product)
+    assert(list(0) == 200 && list(1) == 375 && list(2) == 425 && product == 31875000)
   }
 
 }

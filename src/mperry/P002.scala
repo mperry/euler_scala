@@ -11,7 +11,7 @@ import mperry.math.Fibonacci
  * four million, find the sum of the even-valued terms.
  * 
  */
-object P02 {
+object P002 {
 
   def p = {
     val r = fib.takeWhile(_ <= 4000000).filter(n => n % 2 == 0).foldLeft (0) (_+_)

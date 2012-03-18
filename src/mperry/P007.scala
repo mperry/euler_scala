@@ -8,7 +8,7 @@ import mperry.math.PrimeSieve
  * What is the 10 001st prime number?
  * 
  */
-object P07 {
+object P007 {
   
   def p = {
     val size = 10001
@@ -18,8 +18,8 @@ object P07 {
     val primes = PrimeSieve.lazyValSieve.take(size)
     val p = primes.last
     
-//    assert(p == 104743)
     println("p = " + p + " size = " + primes.size + " list = " + primes)
+    assert(p == 104743)
   }
 
   def stopOnListSize(a: List[Int], current: Int, max: Int): Boolean = {

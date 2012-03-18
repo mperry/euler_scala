@@ -15,6 +15,8 @@ import mperry.math.PrimeSieve
  */
 object P060 {
 
+  // TODO
+  
   val primes = PrimeSieve.lazyValSieve
   
   def p = {

@@ -107,7 +107,7 @@ package mperry
 53503534226472524250874054075591789781264330331690
  *
  */
-object P13 {
+object P013 {
 
   def p = {
     
@@ -219,8 +219,8 @@ object P13 {
     val seq = s.tail.map(BigInt(_))
     val sum = seq.sum
     val prefix = sum.toString.slice(0, 10)
-    assert(prefix == "5537376230")
     println("prefix = " + prefix + " sum = " + sum)
+    assert(prefix == "5537376230")
   }
   
 }

@@ -23,8 +23,8 @@ object P100 {
     //    val o = odds(2, blue, total)
     //    val b = o == BigDecimal(0.5)
 
-    val max = 100
-    //    val max = Math.pow(10, 12).toInt
+//    val max = 100
+        val max = BigInt(10).pow(2)
 //    val v = findMax(2, max)
 //    println(v)
     
@@ -34,9 +34,10 @@ object P100 {
     println ("i = " + i + " v = " + s(i) + " s = " + s)
     println(z.take(3).print)
     
+    
   }
 
-  def process(o: Option[(Int, Int)], f: Int => Boolean): Boolean = {
+  def process(o: Option[(BigInt, BigInt)], f: BigInt => Boolean): Boolean = {
       o match {
         case None => false
         case Some(x) => f(x._2)
@@ -45,20 +46,20 @@ object P100 {
     
   }
 
-  def findStream(choose: Int): Stream[Option[(Int, Int)]] = {
+  def findStream(choose: Int): Stream[Option[(BigInt, BigInt)]] = {
     val s = Stream.from(choose)
     s.map(findMax(choose, _))
   }
 
   
-  def findAllMax(choose: Int, max: Int) = {
+  def findAllMax(choose: BigInt, max: BigInt) = {
     
   }
   
   /*
    * test blue discs out of total
    */
-  def findMax(choose: Int, max: Int): Option[(Int, Int)] = {
+  def findMax(choose: BigInt, max: BigInt): Option[(BigInt, BigInt)] = {
     val l = for (ok <- choose to max; if (odds(choose, ok, max) == 0.5))
       yield (ok, max)
       if (l.size == 0) {
@@ -68,11 +69,11 @@ object P100 {
       }
   }
 
-  def odds(num: Int, good: Int, total: Int): BigDecimal = {
+  def odds(num: BigInt, good: BigInt, total: BigInt): BigDecimal = {
     if (num <= 0) {
       1
     } else {
-      val a = BigDecimal(good) / total
+      val a = BigDecimal(good) / BigDecimal(total)
       return a * odds(num - 1, good - 1, total - 1)
     }
 

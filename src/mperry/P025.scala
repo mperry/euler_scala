@@ -20,12 +20,11 @@ object P025 {
   
   def p = {
     def f = Fibonacci.longFib
-    def digits = 3
+    def digits = 4
     def high = BigInt(10).pow(digits - 1)
     def e = f.dropWhile(_ < high).head
     println(e)
-    assert(true)
-    
+    assert(e == 1597)
   }
   
 }

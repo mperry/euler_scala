@@ -23,7 +23,7 @@ package mperry
  * 
  */
 
-object P12 {
+object P012 {
 
   def p = {
     val i = triangularSeq.map(factors _).find(_.size > 500)
