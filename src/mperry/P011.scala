@@ -60,30 +60,32 @@ object P011 {
   val size = 20
   val run = 4
   val myUnit = 1
-  
+
   def p = {
-
-    val regexp = "[\\r\\n\\s]+"
-    val d = s.replace(String.format("%n"), " ").split(regexp).toList.tail.map(_.toInt)
-    println(d)
-    val grid = breakup(d, size)
+    val list = makeList(s)
+    val grid = breakup(list, size)
+    val productTable = findProduct(grid)
+    val m = productTable.flatten.max
+    println(list)
     println(grid)
-    
-    var result: List[List[Int]] = Nil
-    var row: List[Int] = Nil
-    for (i <- 0 until size) {
-      row = Nil
-      for (j <- 0 until size) {
-        row = row :+ seq(grid, i, j)
-      }
-      result = result :+ row
-    }
-
-    
-    println(result)
-    val m = result.flatten.max
+    println(productTable.toList)
     println(m)
     assert(m == 70600674)
+  }
+
+  def findProduct(grid: List[List[Int]]): Array[Array[Int]] = {
+    val a = Array.tabulate(size, size)((x, y) => 0)
+    for (i <- 0 until size) {
+      for (j <- 0 until size) {
+        a(i)(j) = allSequences(grid, i, j)
+      }
+    }
+    a
+  }
+
+  def makeList(s: String): List[Int] = {
+    val regexp = "[\\r\\n\\s]+"
+    s.replace(String.format("%n"), " ").split(regexp).toList.tail.map(_.toInt)
   }
 
   def breakup(list: List[Int], size: Int): List[List[Int]] = {
@@ -94,29 +96,19 @@ object P011 {
     result
   }
 
-  def seq(grid: List[List[Int]], row: Int, col: Int): Int = {
-    val list = List(right(grid, row, col), down(grid, row, col), sw(grid, row, col), se(grid, row, col))
+  def allSequences(grid: List[List[Int]], row: Int, col: Int): Int = {
+    val list = List(
+      seq(grid, row, col, (r: Int, c: Int, delta: Int) => (r, c + delta)),
+      seq(grid, row, col, (r: Int, c: Int, delta: Int) => (r + delta, c)),
+      seq(grid, row, col, (r: Int, c: Int, delta: Int) => (r + delta, c + delta)),
+      seq(grid, row, col, (r: Int, c: Int, delta: Int) => (r + delta, c - delta)))
     list.max
   }
 
-  def right(grid: List[List[Int]], row: Int, col: Int): Int = {
-    val list = for (z <- 0 until run) yield (value(grid, row, col + z))
-    myMax(list.toList)
-  }
-
-  def sw(grid: List[List[Int]], row: Int, col: Int): Int = {
-    val list = for (z <- 0 until run) yield (value(grid, row + z, col - z))
-    myMax(list.toList)
-  }
-
-  def se(grid: List[List[Int]], row: Int, col: Int): Int = {
-    val list = for (z <- 0 until run) yield (value(grid, row + z, col + z))
-    myMax(list.toList)
-  }
-
-  def down(grid: List[List[Int]], row: Int, col: Int): Int = {
-    val list = for (z <- 0 until run) yield (value(grid, row + z, col))
-    myMax(list.toList)
+  def seq(grid: List[List[Int]], row: Int, col: Int,
+    transform: (Int, Int, Int) => (Int, Int)): Int = {
+    val list = for (z <- 0 until run) yield (value(grid, transform(row, col, z)._1, transform(row, col, z)._2))
+    list.toList.fold(myUnit)(_ * _)
   }
 
   def value(grid: List[List[Int]], row: Int, col: Int): Int = {
@@ -127,12 +119,4 @@ object P011 {
     }
   }
 
-  def myMax(list: List[Int]): Int = {
-    list.fold(myUnit)(func)
-  }
-  
-  def func(a: Int, b: Int): Int = {
-    a * b
-  }
-  
 }
