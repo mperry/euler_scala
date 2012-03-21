@@ -57,12 +57,82 @@ object P011 {
 01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
 """
 
+  val size = 20
+  val run = 4
+  val myUnit = 1
+  
   def p = {
 
     val regexp = "[\\r\\n\\s]+"
-    val d = s.replace(String.format("%n"), " ").split(regexp).toList
+    val d = s.replace(String.format("%n"), " ").split(regexp).toList.tail.map(_.toInt)
     println(d)
+    val grid = breakup(d, size)
+    println(grid)
+    
+    var result: List[List[Int]] = Nil
+    var row: List[Int] = Nil
+    for (i <- 0 until size) {
+      row = Nil
+      for (j <- 0 until size) {
+        row = row :+ seq(grid, i, j)
+      }
+      result = result :+ row
+    }
 
+    
+    println(result)
+    val m = result.flatten.max
+    println(m)
+    assert(m == 70600674)
   }
 
+  def breakup(list: List[Int], size: Int): List[List[Int]] = {
+    var result: List[List[Int]] = Nil
+    for (i <- 0 until list.length / size) {
+      result = result :+ list.slice(i * size, i * size + size)
+    }
+    result
+  }
+
+  def seq(grid: List[List[Int]], row: Int, col: Int): Int = {
+    val list = List(right(grid, row, col), down(grid, row, col), sw(grid, row, col), se(grid, row, col))
+    list.max
+  }
+
+  def right(grid: List[List[Int]], row: Int, col: Int): Int = {
+    val list = for (z <- 0 until run) yield (value(grid, row, col + z))
+    myMax(list.toList)
+  }
+
+  def sw(grid: List[List[Int]], row: Int, col: Int): Int = {
+    val list = for (z <- 0 until run) yield (value(grid, row + z, col - z))
+    myMax(list.toList)
+  }
+
+  def se(grid: List[List[Int]], row: Int, col: Int): Int = {
+    val list = for (z <- 0 until run) yield (value(grid, row + z, col + z))
+    myMax(list.toList)
+  }
+
+  def down(grid: List[List[Int]], row: Int, col: Int): Int = {
+    val list = for (z <- 0 until run) yield (value(grid, row + z, col))
+    myMax(list.toList)
+  }
+
+  def value(grid: List[List[Int]], row: Int, col: Int): Int = {
+    if (row < 0 || row >= size || col < 0 || col >= size) {
+      return myUnit
+    } else {
+      return grid(row)(col)
+    }
+  }
+
+  def myMax(list: List[Int]): Int = {
+    list.fold(myUnit)(func)
+  }
+  
+  def func(a: Int, b: Int): Int = {
+    a * b
+  }
+  
 }
