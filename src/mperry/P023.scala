@@ -1,5 +1,6 @@
 package mperry
-import mperry.math.Factors
+import mperry.math.Factors._
+import mperry.math.PerfectNumber
 
 /**
  * A perfect number is a number for which the sum of its proper divisors is exactly 
@@ -22,9 +23,36 @@ import mperry.math.Factors
  */
 object P023 {
 
+  val MAX = 28123
+  
   def p = {
-    def f = Factors.factors(28)
-    println(f)
+    val bigList = (1 to MAX).toList
+    val nonTwo = bigList.filter(!sumTwo(_, allAbundant))
+    val sum = nonTwo.sum
+    println("sum = " + sum + " length = " + nonTwo.length)
+    println(nonTwo)
+    assert(sum == 4179871)
+    assert(nonTwo.length == 1456)
+  }
+  
+  def sumTwo(n: Int, abundant: Stream[Int]): Boolean = {
+    var found = false
+    val x = 1000
+    if (n % x == 0) {
+    	println(n)  
+    }
+    var i = 0
+    while (!found && abundant(i) < n) {
+      val a = abundant(i)
+      val j = abundant.indexWhere(_ >= n - a)
+      found = abundant(j) == n - a
+      i += 1
+    }
+    found
+  }
+  
+  val allAbundant: Stream[Int] = {
+    Stream.from(1).filter(PerfectNumber.isPerfect(_) == PerfectNumber.ABUNDANT)
   }
   
 }
