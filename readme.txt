@@ -1,6 +1,6 @@
 
 TODO
 
-up to problem 25 (inclusive)
+Problems unsolved up to problem 25 (inclusive):
 
-problems 11, 22
+None
